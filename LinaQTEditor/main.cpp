@@ -1,13 +1,15 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <Lina.hpp>
+#include "Core/Application.hpp"
 #include "PackageManager/PAMWindow.hpp"
 #include "PackageManager/PAMInputDevice.hpp"
 #include "Rendering/RenderEngine.hpp"
 #include "Physics/PhysicsEngine.hpp"
 #include "Input/InputEngine.hpp"
 #include "Levels/DefaultEditorLevel.hpp"
+#include "Rendering/ContextWindow.hpp"
+#include "Utility/Log.hpp"
 
 namespace LinaEditor
 {
@@ -17,6 +19,8 @@ namespace LinaEditor
 
 		EditorApplication() {
 			LINA_CLIENT_TRACE("[Constructor] -> Editor Application ({0})", typeid(*this).name());
+
+		
 
 			// Create layers
 			// m_guiLayer = new LinaEditor::GUILayer();
@@ -53,12 +57,17 @@ namespace LinaEditor
 
 LinaEngine::Application* LinaEngine::CreateApplication()
 {
+	QGuiApplication app();
+
+	QSurfaceFormat format;
+	format.setSamples(16);
 	return new LinaEditor::EditorApplication();
 }
 
 // Default platform context window.
 LinaEngine::Graphics::Window* LinaEngine::CreateContextWindow()
 {
+	//return new LinaEditor::Graphics::ContextWindow();
 	return new ContextWindow();
 }
 
@@ -84,4 +93,28 @@ LinaEngine::Physics::PhysicsEngine* LinaEngine::CreatePhysicsEngine()
 LinaEngine::Input::InputEngine* LinaEngine::CreateInputEngine()
 {
 	return new LinaEngine::Input::InputEngine();
+}
+
+int main(int argc, char* argv[])
+{
+	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+	QGuiApplication app(argc, argv);
+
+	QQmlApplicationEngine engine;
+	const QUrl url(QStringLiteral("qrc:/main.qml"));
+	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+		&app, [url](QObject* obj, const QUrl& objUrl) {
+			if (!obj && url == objUrl)
+				QCoreApplication::exit(-1);
+		}, Qt::QueuedConnection);
+	engine.load(url);
+
+	LinaEngine::Log::Init();
+
+	LinaEditor::EditorApplication* editorApp = new LinaEditor::EditorApplication();
+	editorApp->Run();
+	delete editorApp;
+
+	return app.exec();
 }

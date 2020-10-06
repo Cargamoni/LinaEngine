@@ -4,6 +4,7 @@ project(LinaQTEditor LANGUAGES CXX)
 
 set(QT_CONFIG_DIR "D:/Softwares/Qt/5.15.1/msvc2019_64/lib/cmake" CACHE FILEPATH "" FORCE)
 set(QT_BIN_DIR "D:/Softwares/Qt/5.15.1/msvc2019_64/bin" CACHE FILEPATH "" FORCE)
+set(QT_QML_DIR "D:/Softwares/Qt/5.15.1/msvc2019_64" CACHE FILEPATH "" FORCE)
 set (CMAKE_PREFIX_PATH ${QT_CONFIG_DIR})
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -18,13 +19,15 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
 set(LINAEDITOR_SOURCES
-	src/main.cpp
-	src/qml.qrc
+main.cpp
+	qml.qrc
 	src/Levels/DefaultEditorLevel.cpp
+	src/Rendering/ContextWindow.cpp
 )
 
 set(LINAEDITOR_HEADERS
 	include/Levels/DefaultEditorLevel.hpp
+	include/Rendering/ContextWindow.hpp
 )
 
 add_executable(${PROJECT_NAME} ${LINAEDITOR_SOURCES} ${LINAEDITOR_HEADERS})
@@ -90,7 +93,7 @@ COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/
 add_custom_command(
 TARGET ${PROJECT_NAME}
 POST_BUILD
-COMMAND D:/Softwares/Qt/5.15.1/msvc2019_64/bin/windeployqt.exe --qmldir . ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\$<CONFIGURATION>\\${PROJECT_NAME}.exe
+COMMAND D:/Softwares/Qt/5.15.1/msvc2019_64/bin/windeployqt.exe --qmldir ${QT_QML_DIR} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\\$<CONFIGURATION>\\${PROJECT_NAME}.exe
 COMMENT "Deploying QT Modules...")
 
 
