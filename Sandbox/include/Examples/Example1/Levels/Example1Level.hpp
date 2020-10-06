@@ -24,12 +24,12 @@ Timestamp: 5/6/2019 9:22:35 PM
 
 #include "World/Level.hpp"
 
-class Example1Level : public LinaEngine::World::Level
+class DefaultEditorLevel : public LinaEngine::World::Level
 {
 public:
 
-	Example1Level() {};
-	~Example1Level();
+	DefaultEditorLevel() {};
+	~DefaultEditorLevel();
 
 	virtual void Install() override;
 	virtual void Initialize() override;

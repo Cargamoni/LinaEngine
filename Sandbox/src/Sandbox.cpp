@@ -59,7 +59,7 @@ public:
 		//LINA_CLIENT_TRACE("[Destructor] -> Sanbox ({0})", typeid(*this).name());
 	}
 
-	Example1Level level;
+	DefaultEditorLevel level;
 
 	
 };

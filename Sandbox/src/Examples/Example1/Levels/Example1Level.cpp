@@ -58,12 +58,12 @@ MeshRendererComponent object1Renderer;
 MeshRendererComponent smallCubeRenderer;
 
 
-Example1Level::~Example1Level()
+DefaultEditorLevel::~DefaultEditorLevel()
 {
 	delete ecsFreeLookSystem;
 }
 
-void Example1Level::Install()
+void DefaultEditorLevel::Install()
 {
 	LINA_CLIENT_WARN("Example level 1 install.");
 }
@@ -149,7 +149,7 @@ int sLightSize = 0;
 
 ECSEntity cubeEntity;
 TransformComponent* dirLightT;
-void Example1Level::Initialize()
+void DefaultEditorLevel::Initialize()
 {
 
 	LINA_CLIENT_WARN("Example level 1 initialize.");
@@ -378,7 +378,7 @@ void Example1Level::Initialize()
 
 static float t2 = 0.0f;
 
-void Example1Level::Tick(float delta)
+void DefaultEditorLevel::Tick(float delta)
 {
 	// Update the systems in this level.
 	level1Systems.UpdateSystems(delta);

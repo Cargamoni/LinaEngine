@@ -1,9 +1,9 @@
-
 /*
 Author: Inan Evin
 www.inanevin.com
+https://github.com/inanevin/LinaEngine
 
-Copyright 2018 Inan Evin
+Copyright 2020~ Inan Evin
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
@@ -13,12 +13,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
 and limitations under the License.
 
-Class: Example1Level
-Timestamp: 5/6/2019 9:22:56 PM
+Class: DefaultEditorLevel
+Timestamp: 10/6/2020 6:19:15 PM
 
 */
 
-#include "Levels/Example1Level.hpp"
+
+#include "Levels/DefaultEditorLevel.hpp"
 #include "Rendering/RenderConstants.hpp"
 #include "ECS/Systems/FreeLookSystem.hpp"
 #include "ECS/Components/FreeLookComponent.hpp"
@@ -28,8 +29,6 @@ Timestamp: 5/6/2019 9:22:56 PM
 #include "ECS/Components/LightComponent.hpp"
 #include "ECS/Components/RigidbodyComponent.hpp"
 #include "ECS/Components/SpriteRendererComponent.hpp"
-#include "Levels/GroundCubeSystem.hpp"
-#include "Levels/GroundCubeComponent.hpp"
 #include "Rendering/RenderEngine.hpp"
 #include "Core/Application.hpp"
 #include "Rendering/Material.hpp"
@@ -41,7 +40,6 @@ using namespace LinaEngine::ECS;
 
 ECSSystemList level1Systems;
 FreeLookSystem* ecsFreeLookSystem;
-GroundCubeSystem* groundCubeSystem;
 CameraComponent cameraComponent;
 TransformComponent cameraTransformComponent;
 FreeLookComponent cameraFreeLookComponent;
@@ -60,7 +58,6 @@ Material* roadMaterial;
 DefaultEditorLevel::~DefaultEditorLevel()
 {
 	delete ecsFreeLookSystem;
-	delete groundCubeSystem;
 }
 
 void DefaultEditorLevel::Install()
@@ -158,7 +155,7 @@ void DefaultEditorLevel::Initialize()
 	auto& camFreeLook = m_ECS->emplace<FreeLookComponent>(camera);
 	auto& camTransform = m_ECS->emplace<TransformComponent>(camera);
 	auto& camCamera = m_ECS->emplace<CameraComponent>(camera);
-	camTransform.transform.location = Vector3(0,5,-5);
+	camTransform.transform.location = Vector3(0, 5, -5);
 	camCamera.isActive = true;
 	camFreeLook.movementSpeedX = camFreeLook.movementSpeedZ = 12.0f;
 	camFreeLook.rotationSpeedX = camFreeLook.rotationSpeedY = 3;
@@ -322,15 +319,10 @@ void DefaultEditorLevel::Initialize()
 	}
 
 
-	groundCubeSystem = new GroundCubeSystem();
-	groundCubeSystem->Construct(*m_ECS);
-
-
 	// Create the free look system & push it.
 	ecsFreeLookSystem = new FreeLookSystem();
 	ecsFreeLookSystem->Construct(*m_ECS, *m_InputEngine);
 	level1Systems.AddSystem(*ecsFreeLookSystem);
-	level1Systems.AddSystem(*groundCubeSystem);
 
 }
 

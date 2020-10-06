@@ -24,6 +24,7 @@ project (Lina)
 #--------------------------------------------------------------------
 #set(CMAKE_C_COMPILER /c/MinGW/bin/gcc.exe)
 #set(CMAKE_CXX_COMPILER /c/MinGW/bin/g++.exe)
+#option(QT_CMAKECONFIG_PATH)
 
 # option(LINA_BUILD_SANDBOX "Build Sandbox Application" ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -75,6 +76,7 @@ set(LINASANDBOX_HEADER_DIR Sandbox/include)
 
 add_subdirectory(Sandbox)
 add_subdirectory(LinaEditor)
+add_subdirectory(LinaQTEditor)
 add_subdirectory(LinaEngine)
 add_subdirectory(LinaECS)
 add_subdirectory(LinaGraphics)
