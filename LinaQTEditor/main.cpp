@@ -17,10 +17,9 @@ namespace LinaEditor
 	{
 	public:
 
-		EditorApplication() {
+		EditorApplication(LinaEngine::Graphics::WindowProperties windowProps = LinaEngine::Graphics::WindowProperties()) : Application(windowProps) {
 			LINA_CLIENT_TRACE("[Constructor] -> Editor Application ({0})", typeid(*this).name());
-
-		
+			
 
 			// Create layers
 			// m_guiLayer = new LinaEditor::GUILayer();
@@ -112,7 +111,8 @@ int main(int argc, char* argv[])
 
 	LinaEngine::Log::Init();
 
-	LinaEditor::EditorApplication* editorApp = new LinaEditor::EditorApplication();
+	LinaEngine::Graphics::WindowProperties props = LinaEngine::Graphics::WindowProperties();
+	LinaEditor::EditorApplication* editorApp = new LinaEditor::EditorApplication(props);
 	editorApp->Run();
 	delete editorApp;
 

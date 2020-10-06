@@ -287,6 +287,7 @@ namespace LinaEngine::Graphics
 		unsigned int m_Width;
 		unsigned int m_Height;
 		bool vSyncEnabled;
+		bool m_isOffScreenContext;
 
 		WindowProperties()
 		{
@@ -295,11 +296,12 @@ namespace LinaEngine::Graphics
 			m_Height = 900;
 		}
 
-		WindowProperties(const std::string& title, unsigned int width, unsigned int height)
+		WindowProperties(const std::string& title, unsigned int width, unsigned int height, bool isOffScreen)
 		{
 			m_Title = title;
 			m_Width = width;
 			m_Height = height;
+			m_isOffScreenContext = isOffScreen;
 		}
 	};
 

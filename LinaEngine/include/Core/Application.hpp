@@ -25,7 +25,7 @@ Timestamp: 12/29/2018 10:43:46 PM
 #include "Utility/Math/Color.hpp"
 #include "Core/LayerStack.hpp"
 #include "ECS/ECSSystem.hpp"
-
+#include "Rendering/RenderingCommon.hpp"
 #include <functional>
 
 namespace LinaEngine::World
@@ -80,7 +80,7 @@ namespace LinaEngine
 
 	protected:
 
-		Application();
+		Application(Graphics::WindowProperties windowProps = Graphics::WindowProperties("Lina App", 800,600, false));
 
 		// Delegates draw commands from physics engine to rendering engine
 		virtual void OnDrawLine(Vector3 from, Vector3 to, Color color, float width = 1.0f);
