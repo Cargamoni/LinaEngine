@@ -77,6 +77,7 @@ namespace LinaEngine
 
 		// Get current frames per second.
 		FORCEINLINE int GetCurrentFPS() { return m_CurrentFPS; }
+		FORCEINLINE Graphics::RenderEngine& GetRenderEngine() { return *m_renderEngine; }
 
 	protected:
 
@@ -87,7 +88,6 @@ namespace LinaEngine
 
 		// Get render engine
 		FORCEINLINE Graphics::Window& GetAppWindow() { return *m_appWindow; }
-		FORCEINLINE Graphics::RenderEngine& GetRenderEngine() { return *m_renderEngine; }
 		FORCEINLINE Input::InputEngine& GetInputEngine() { return *m_inputEngine; }
 		FORCEINLINE Physics::PhysicsEngine& GetPhysicsEngine() { return *m_physicsEngine; }
 		FORCEINLINE ECS::ECSRegistry& GetECSREgistry() { return m_ECS; }

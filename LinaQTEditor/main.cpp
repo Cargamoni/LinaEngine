@@ -11,6 +11,9 @@
 #include "Rendering/ContextWindow.hpp"
 #include "Utility/Log.hpp"
 
+#include "qquickitem.h"
+#include "qobject.h"
+
 namespace LinaEditor
 {
 	class EditorApplication : public LinaEngine::Application
@@ -100,21 +103,32 @@ int main(int argc, char* argv[])
 
 	QGuiApplication app(argc, argv);
 
+
 	QQmlApplicationEngine engine;
 	const QUrl url(QStringLiteral("qrc:/main.qml"));
-	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-		&app, [url](QObject* obj, const QUrl& objUrl) {
+	QObject* m_obj;
+
+	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject* obj, const QUrl& objUrl) {
 			if (!obj && url == objUrl)
 				QCoreApplication::exit(-1);
 		}, Qt::QueuedConnection);
+
 	engine.load(url);
 
-	LinaEngine::Log::Init();
+	//QObject* rootObject = engine.rootObjects().first();
+	//QObject* qmlObject = rootObject->findChild<QObject*>("sceneImage");
 
-	LinaEngine::Graphics::WindowProperties props = LinaEngine::Graphics::WindowProperties();
-	LinaEditor::EditorApplication* editorApp = new LinaEditor::EditorApplication(props);
-	editorApp->Run();
-	delete editorApp;
+
+	//LinaEngine::Log::Init();
+	//
+	//LinaEngine::Graphics::WindowProperties props = LinaEngine::Graphics::WindowProperties();
+	//props.m_isOffScreenContext = false;
+	//props.m_Width = 800;
+	//props.m_Height = 600;
+	//
+	//LinaEditor::EditorApplication* editorApp = new LinaEditor::EditorApplication(props);
+	//editorApp->Run();
+	//delete editorApp;
 
 	return app.exec();
 }
